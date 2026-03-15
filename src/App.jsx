@@ -1,13 +1,22 @@
-import NavBar from "./NavBAr"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { NavBar } from "./NavBar";
+import { Body } from "./Body";
+import { Login } from "./Login";
+import { Profile } from "./Profile";
 
-function App() {
-
+export function App() {
   return (
     <>
-      <NavBar/>
-      <div></div>
+      <BrowserRouter basename="/">
+        <Routes>
+          {/* inside the body we are creating multiple children routes 
+           and parent should render the children in an <Outlet /> */}
+          <Route path="/" element={<Body />} >
+            <Route path="/login" element={<Login/>} />
+            <Route path="/profile" element={<Profile/>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
-
-export default App
