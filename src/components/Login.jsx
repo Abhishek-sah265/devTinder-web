@@ -17,7 +17,7 @@ export const Login = () => {
             const res = await axios.post(BASE_URL + "/login", {
                 emailId,
                 password
-            }, { withCredentials: true }); // to get cookies along with the response
+            }, { withCredentials: true }); // to get cookies along with the response, we have to do this in all api calls
             console.log("res.data: ", res.data);
             dispatch(addUser(res.data));
             navigate("/"); // Navigate to the dashboard after successful login
