@@ -21,7 +21,6 @@ export const Body = () => {
                 navigate("/login");
                 return;
             }
-            console.log(err);
         }
     }
     useEffect(() => {

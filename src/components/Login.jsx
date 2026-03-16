@@ -7,8 +7,8 @@ import { BASE_URL } from "../utils/constants";
 
 export const Login = () => {
 
-    const [emailId, setEmailId] = useState("ratata@gmail.com");
-    const [password, setPassword] = useState("Ratata@123");
+    const [emailId, setEmailId] = useState("sherlock@gmail.com");
+    const [password, setPassword] = useState("Sherlock@123");
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -19,7 +19,6 @@ export const Login = () => {
                 emailId,
                 password
             }, { withCredentials: true }); // to get cookies along with the response, we have to do this in all api calls
-            console.log("res.data: ", res.data);
             dispatch(addUser(res.data));
             navigate("/"); // Navigate to the dashboard after successful login
         } catch (err) {
