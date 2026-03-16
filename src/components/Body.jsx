@@ -28,7 +28,7 @@ export const Body = () => {
         if(!userData){
             fetchUser();
         }
-    }, [userData]);
+    }, []);
     return (
         <div>
             <NavBar />

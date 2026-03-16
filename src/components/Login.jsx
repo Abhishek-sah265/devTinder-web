@@ -9,6 +9,7 @@ export const Login = () => {
 
     const [emailId, setEmailId] = useState("ratata@gmail.com");
     const [password, setPassword] = useState("Ratata@123");
+    const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ export const Login = () => {
             dispatch(addUser(res.data));
             navigate("/"); // Navigate to the dashboard after successful login
         } catch (err) {
-            console.log(err);
+            setError(err?.response?.data);
         }
     };
     return (
@@ -51,6 +52,7 @@ export const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {error && <p className="text-red-500">{error}</p>}
                     <button className="btn btn-primary mt-4" onClick={handleLogin}>Login</button>
                 </fieldset>
             </div>
