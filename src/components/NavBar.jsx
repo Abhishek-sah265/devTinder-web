@@ -8,7 +8,7 @@ export const NavBar = () => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const handleLogout = async () => {
         try {
             await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
@@ -42,10 +42,14 @@ export const NavBar = () => {
                         <li>
                             <Link to="/profile" className="justify-between">
                                 Profile
-                                <span className="badge">New</span>
                             </Link>
                         </li>
-                        <li><a>Settings</a></li>
+                        <li>
+                            <Link to="/connections" className="justify-between">
+                                Connections
+                            </Link>
+                        </li>
+
                         <li><a onClick={handleLogout}>Logout</a></li>
                     </ul>
                 </div>
