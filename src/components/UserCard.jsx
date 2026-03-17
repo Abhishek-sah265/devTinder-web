@@ -14,7 +14,7 @@ export const UserCard = ({ user }) => {
                 {age && <p>Age: {age}</p>}
                 {gender && <p>Gender: {gender}</p>}
                 <p>{about}</p>
-                <div className="card-actions justify-center my-4">
+                <div className="card-actions justify-center">
                     <button className="btn btn-primary">Ignore</button>
                     <button className="btn btn-secondary">Interested</button>
                 </div>

@@ -11,7 +11,7 @@ export const Feed = () => {
     const dispatch = useDispatch();
 
     const getFeed = async () => {
-        if (feedData.length) return;
+        if (feedData) return;
         try {
             const res = await axios.get(BASE_URL + "/feed", { withCredentials: true });
             dispatch(addFeed(res.data.data));
