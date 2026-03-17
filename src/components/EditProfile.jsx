@@ -21,7 +21,7 @@ export const EditProfile = ({ userData }) => {
         try {
             const updatedProfile = { firstName, lastName, age, gender, about, photoUrl };
             const res = await axios.patch(BASE_URL + "/profile/edit", updatedProfile, { withCredentials: true });
-            dispatch(addUser(res?.data?.data)); // Update user data in Redux store
+            dispatch(addUser(res?.data)); // Update user data in Redux store
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000); // Hide toast after 3 seconds
         } catch (err) {
