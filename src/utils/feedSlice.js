@@ -10,10 +10,14 @@ const feedSlice = createSlice({
         },
         removeFeed: (state, action) => {
             return null; // when user logs out, we will clear the feed
+        },
+        removeUserFromFeed: (state, action) => {
+            const newFeed = state.filter((u) => u._id !== action.payload);
+            return newFeed;
         }
 
     }
 });
 
-export const { addFeed, removeFeed } = feedSlice.actions;
+export const { addFeed, removeFeed, removeUserFromFeed } = feedSlice.actions;
 export default feedSlice.reducer;

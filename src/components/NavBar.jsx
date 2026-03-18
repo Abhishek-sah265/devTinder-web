@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
+import { removeFeed } from "../utils/feedSlice";
 
 export const NavBar = () => {
     const user = useSelector((state) => state.user);
@@ -11,8 +12,10 @@ export const NavBar = () => {
 
     const handleLogout = async () => {
         try {
+            // 2nd parameter is data we want to send in the body, since we don't have any data to send, we pass an empty object
             await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
             dispatch(removeUser());
+            dispatch(removeFeed()); // to prevent showing feed data of previous user before new feed data is loaded
             navigate("/login");
         } catch (err) {
             console.log(err);
