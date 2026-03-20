@@ -1,5 +1,5 @@
 import axios from "axios";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +7,29 @@ import { BASE_URL } from "../utils/constants";
 
 export const Login = () => {
 
-    const [emailId, setEmailId] = useState("sherlock@gmail.com");
-    const [password, setPassword] = useState("Sherlock@123");
+    const [emailId, setEmailId] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [isLoginForm, setIsLoginForm] = useState(true);
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const handleSignUp = async () => {
+        try {
+            const res = await axios.post(
+                BASE_URL + "/signup",
+                { firstName, lastName, emailId, password },
+                { withCredentials: true }
+            );
+            const userPayload = res?.data;
+            dispatch(addUser(userPayload));
+            return navigate("/profile");
+        } catch (err) {
+            setError(err?.response?.data || "Something went wrong");
+        }
+    };
 
     const handleLogin = async () => {
         try {
@@ -19,10 +37,11 @@ export const Login = () => {
                 emailId,
                 password
             }, { withCredentials: true }); // to get cookies along with the response, we have to do this in all api calls
-            dispatch(addUser(res.data));
+            const userPayload = res?.data;
+            dispatch(addUser(userPayload));
             navigate("/"); // Navigate to the dashboard after successful login
         } catch (err) {
-            setError(err?.response?.data);
+            setError(err?.response?.data || "Something went wrong");
         }
     };
     return (
@@ -34,7 +53,27 @@ export const Login = () => {
             </figure>
             <div className="card-body">
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs p-4">
-                    <legend className="fieldset-legend font-bold text-lg">Login</legend>
+                    <legend className="fieldset-legend font-bold text-lg">{isLoginForm ? "Login" : "Sign Up"}</legend>
+                    {!isLoginForm && (
+                        <>
+                            <label className="label">First Name</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="First Name"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                            <label className="label">Last Name</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Last Name"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </>
+                    )}
                     <label className="label">Email ID</label>
                     <input
                         type="email"
@@ -52,8 +91,16 @@ export const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     {error && <p className="text-red-500">{error}</p>}
-                    <button className="btn btn-primary mt-4" onClick={handleLogin}>Login</button>
+                    <button className="btn btn-primary mt-4" onClick={isLoginForm ? handleLogin : handleSignUp}>  {isLoginForm ? "Login" : "Sign Up"}</button>
                 </fieldset>
+                <p
+                    className="m-auto cursor-pointer py-2"
+                    onClick={() => setIsLoginForm((value) => !value)}
+                >
+                    {isLoginForm
+                        ? "New User ? Signup Here"
+                        : "Existing User ? Login Here"}
+                </p>
             </div>
         </div>
     );
