@@ -31,7 +31,9 @@ export const Body = () => {
     return (
         <div>
             <NavBar />
-            <Outlet />
+            <div className="pb-20">
+                <Outlet />
+            </div>
             <Footer />
 
         </div>
